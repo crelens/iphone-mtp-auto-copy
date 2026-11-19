@@ -1,0 +1,14 @@
+{
+  "DestinationRoot": "D:\\iPhoneImport",
+  "ResetEveryFiles": 100,
+  "LargeFileResetMB": 1000,
+  "StallSeconds": 75,
+  "StartTimeoutSeconds": 90,
+  "MaxFileMinutes": 180,
+  "StableSeconds": 5,
+  "PauseBetweenFiles": 1,
+  "MaxAttemptsPerFile": 2,
+  "ReconnectTimeoutSec": 60,
+  "DeferredRetryRounds": 3,
+  "DeferredRetryDelaySeconds": 10
+}

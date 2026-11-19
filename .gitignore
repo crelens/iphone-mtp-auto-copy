@@ -1,0 +1,15 @@
+# Runtime state
+mtp-auto-copy.config.json
+logs/
+dist/
+
+# Incomplete transfer files
+_incomplete/
+*.partial_*
+
+# Windows and editor metadata
+Thumbs.db
+desktop.ini
+.DS_Store
+.idea/
+.vscode/

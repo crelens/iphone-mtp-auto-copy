@@ -1,0 +1,64 @@
+name: Publish release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Build release package
+        shell: pwsh
+        run: |
+          $tag = $env:GITHUB_REF_NAME
+          $packageRoot = Join-Path $env:RUNNER_TEMP "iphone-mtp-auto-copy"
+          New-Item -ItemType Directory -Path $packageRoot -Force | Out-Null
+
+          $files = @(
+            ".gitignore",
+            "CHANGELOG.md",
+            "config.example.json",
+            "launcher-mtp-auto-copy.cmd",
+            "LICENSE",
+            "mtp-auto-copy.ps1",
+            "mtp-dialog-watchdog.ps1",
+            "README.md",
+            "SECURITY.md",
+            "USAGE.zh-CN.md"
+          )
+
+          foreach ($file in $files) {
+            Copy-Item -LiteralPath $file -Destination $packageRoot -Force
+          }
+          Copy-Item -LiteralPath "docs" -Destination $packageRoot -Recurse -Force
+
+          $dist = Join-Path $env:GITHUB_WORKSPACE "dist"
+          New-Item -ItemType Directory -Path $dist -Force | Out-Null
+          $archive = Join-Path $dist "MTP-Guardian_$tag.zip"
+          Compress-Archive -Path $packageRoot -DestinationPath $archive -CompressionLevel Optimal
+
+          $hash = (Get-FileHash -LiteralPath $archive -Algorithm SHA256).Hash.ToLowerInvariant()
+          "$hash  MTP-Guardian_$tag.zip" |
+            Set-Content -LiteralPath (Join-Path $dist "SHA256SUMS.txt") -Encoding ascii
+
+      - name: Publish GitHub release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $tag = $env:GITHUB_REF_NAME
+          gh release create $tag `
+            "dist/MTP-Guardian_$tag.zip" `
+            "dist/SHA256SUMS.txt" `
+            --title "MTP Guardian $tag" `
+            --notes-file "CHANGELOG.md" `
+            --latest

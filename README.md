@@ -46,7 +46,7 @@ MTP Guardian works around these failures by copying one file at a time, recoveri
 
 Use the latest release on GitHub:
 
-[Download the latest release](../../releases/latest)
+[Download the latest release](https://github.com/crelens/iphone-mtp-auto-copy/releases/latest)
 
 Alternatively, open the repository and click:
 

@@ -2,6 +2,10 @@
 
 ### Reliable iPhone to Windows photo and video transfer over MTP
 
+**English:** A resilient Windows utility for transferring iPhone photos and videos over MTP, with automatic reconnects, multi-pass retries, resume support, and final reports.
+
+**中文：** 面向 Windows 的苹果手机照片和视频稳定复制工具，支持 MTP 自动重连、失败文件多轮重试、断点续传和最终统计。
+
 [English](README.md) | [简体中文使用说明](USAGE.zh-CN.md)
 
 ![Platform](https://img.shields.io/badge/platform-Windows%2010%20%7C%2011-0078D4)
